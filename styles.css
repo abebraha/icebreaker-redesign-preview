@@ -52,7 +52,7 @@ section, header, footer { background: var(--surface); color: var(--ink); }
 .sec { padding: var(--pad) 0; }
 
 h1, h2, h3, h4 { font-family: var(--display); margin: 0; text-wrap: balance; color: var(--ink); }
-h1 { font-size: clamp(2.6rem, 4.9vw, 4.3rem); font-weight: 800; line-height: .98; letter-spacing: -.035em; font-variation-settings: "wdth" 110; }
+h1 { font-size: clamp(2.6rem, 4.6vw, 4rem); font-weight: 800; line-height: .98; letter-spacing: -.035em; font-variation-settings: "wdth" 110; }
 h2 { font-size: clamp(2rem, 3.6vw, 3.05rem); font-weight: 800; line-height: 1.02; letter-spacing: -.03em; font-variation-settings: "wdth" 106; }
 h3 { font-size: 1.3rem; font-weight: 700; line-height: 1.2; letter-spacing: -.015em; font-variation-settings: "wdth" 102; }
 h4 { font-size: 1rem; font-weight: 700; line-height: 1.3; letter-spacing: -.005em; font-family: var(--body); }
@@ -126,7 +126,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, summary:focus-visibl
 /* Hero */
 .hero { position: relative; overflow: hidden; padding: 72px 0 var(--pad); }
 .hero::before { content: ""; position: absolute; inset: -20% -10% auto auto; width: 720px; height: 720px; border-radius: 50%; background: radial-gradient(closest-side, rgba(108,155,255,.18), rgba(108,155,255,0)); pointer-events: none; }
-.hero .wrap { display: grid; grid-template-columns: 1.2fr .9fr; gap: 52px; align-items: center; position: relative; }
+.hero .wrap { display: grid; grid-template-columns: 1.15fr .95fr; gap: 52px; align-items: center; position: relative; }
 .hero h1 { margin-bottom: 22px; }
 .hero .lead { margin-bottom: 28px; }
 .hero .cta-row { margin-bottom: 18px; }
@@ -164,7 +164,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, summary:focus-visibl
 .ui-tiles { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; padding: 12px 18px; }
 .ui-tile { background: #141A23; border: 1px solid #1F2734; border-radius: 12px; padding: 12px 14px; display: grid; gap: 6px; }
 .ui-tile .k { font-size: .72rem; color: #8A93A3; letter-spacing: .04em; text-transform: uppercase; }
-.ui-tile .v { font-family: var(--display); font-size: 1.55rem; font-weight: 700; letter-spacing: -.02em; font-variant-numeric: tabular-nums; line-height: 1; }
+.ui-tile .v { font-family: var(--display); font-size: clamp(1.2rem, 1.5vw, 1.5rem); font-weight: 700; letter-spacing: -.02em; font-variant-numeric: tabular-nums; line-height: 1; }
 .ui-tile .v small { font-size: .8rem; color: #8A93A3; font-family: var(--body); font-weight: 500; margin-left: 4px; }
 .ui-tile .bar { height: 5px; background: #1F2734; border-radius: 99px; overflow: hidden; }
 .ui-tile .bar i { display: block; height: 100%; width: var(--w, 50%); background: linear-gradient(90deg, #6C9BFF, #BFE3FF); border-radius: 99px; }
