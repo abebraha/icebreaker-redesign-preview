@@ -160,7 +160,7 @@
       W = r.width; H = r.height;
       canvas.width = Math.round(W * dpr); canvas.height = Math.round(H * dpr);
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      gap = W < 700 ? 30 : 26;
+      gap = W < 700 ? 38 : 34;
       cols = Math.ceil(W / gap) + 2; rows = Math.ceil(H / gap) + 2;
       pts = [];
       for (let j = 0; j < rows; j++) for (let i = 0; i < cols; i++) pts.push({ x: i * gap - gap, y: j * gap - gap, f: 0 });
@@ -174,7 +174,7 @@
     const spawnPulse = () => {
       const p = pts[Math.floor(Math.random() * pts.length)];
       if (!p) return;
-      pulses.push({ x: p.x, y: p.y, r: 0, max: rnd(90, 170), life: 0, dur: rnd(1.4, 2.2) });
+      pulses.push({ x: p.x, y: p.y, r: 0, max: rnd(70, 130), life: 0, dur: rnd(1.6, 2.4) });
     };
     const spawnLink = () => {
       const a = pts[Math.floor(Math.random() * pts.length)];
@@ -190,8 +190,8 @@
       const dt = Math.min(0.05, (now - last) / 1000 || 0.016); last = now; t += dt;
       mouse.x += (mouse.tx - mouse.x) * 0.12; mouse.y += (mouse.ty - mouse.y) * 0.12;
       pulseTimer += dt; linkTimer += dt;
-      if (pulseTimer > 0.55) { pulseTimer = 0; spawnPulse(); }
-      if (linkTimer > 2.4) { linkTimer = 0; spawnLink(); }
+      if (pulseTimer > 1.15) { pulseTimer = 0; spawnPulse(); }
+      if (linkTimer > 4.2) { linkTimer = 0; spawnLink(); }
 
       ctx.clearRect(0, 0, W, H);
 
@@ -199,19 +199,19 @@
       for (let k = 0; k < pts.length; k++) {
         const p = pts[k];
         const n = noise(p.x, p.y, t);
-        let a = 0.10 + 0.22 * (n + 1) / 2;
-        let s = 1.1 + 0.9 * (n + 1) / 2;
+        let a = 0.05 + 0.13 * (n + 1) / 2;
+        let s = 1.0 + 0.7 * (n + 1) / 2;
         let ox = 0, oy = 0;
         const dx = p.x - mouse.x, dy = p.y - mouse.y, dd = dx * dx + dy * dy;
-        if (dd < 180 * 180) {
-          const d = Math.sqrt(dd) || 1, f = (1 - d / 180);
-          ox = dx / d * f * 14; oy = dy / d * f * 14; a += f * 0.45; s += f * 1.2;
+        if (dd < 150 * 150) {
+          const d = Math.sqrt(dd) || 1, f = (1 - d / 150);
+          ox = dx / d * f * 8; oy = dy / d * f * 8; a += f * 0.22; s += f * 0.7;
         }
         // pulse flash
         for (let q = 0; q < pulses.length; q++) {
           const pu = pulses[q];
           const pd = Math.hypot(p.x - pu.x, p.y - pu.y);
-          if (Math.abs(pd - pu.r) < 14) { a += 0.5 * (1 - pu.life / pu.dur); s += 0.8; }
+          if (Math.abs(pd - pu.r) < 12) { a += 0.28 * (1 - pu.life / pu.dur); s += 0.5; }
         }
         ctx.fillStyle = 'rgba(160,190,235,' + Math.min(1, a).toFixed(3) + ')';
         ctx.fillRect(p.x + ox - s / 2, p.y + oy - s / 2, s, s);
@@ -222,7 +222,7 @@
         const pu = pulses[q]; pu.life += dt; const k = pu.life / pu.dur;
         pu.r = pu.max * (1 - Math.pow(1 - k, 3));
         ctx.beginPath(); ctx.arc(pu.x, pu.y, pu.r, 0, Math.PI * 2);
-        ctx.strokeStyle = 'rgba(191,227,255,' + (0.35 * (1 - k)).toFixed(3) + ')'; ctx.lineWidth = 1; ctx.stroke();
+        ctx.strokeStyle = 'rgba(191,227,255,' + (0.2 * (1 - k)).toFixed(3) + ')'; ctx.lineWidth = 1; ctx.stroke();
         if (k >= 1) pulses.splice(q, 1);
       }
 
@@ -264,5 +264,82 @@
         new IntersectionObserver((en) => { en[0].isIntersecting ? start() : stop(); }, { threshold: 0.02 }).observe(canvas);
       }
     }
+  }
+
+  /* ---------- Page transitions (fallback curtain when the browser lacks cross-document view transitions) ---------- */
+  const nativeVT = 'startViewTransition' in document;
+  if (!nativeVT && !reduce) {
+    const curtain = document.createElement('div'); curtain.className = 'curtain'; document.body.appendChild(curtain);
+    try { if (sessionStorage.getItem('ib-vt')) { sessionStorage.removeItem('ib-vt'); curtain.classList.add('off'); } } catch (e) {}
+    document.addEventListener('click', (e) => {
+      const a = e.target.closest('a[href]');
+      if (!a || e.defaultPrevented || e.metaKey || e.ctrlKey || e.shiftKey || a.target === '_blank') return;
+      const url = new URL(a.href, location.href);
+      if (url.origin !== location.origin || !/\.html?$/.test(url.pathname) || (url.pathname === location.pathname && url.hash)) return;
+      e.preventDefault();
+      try { sessionStorage.setItem('ib-vt', '1'); } catch (err) {}
+      curtain.classList.remove('off'); curtain.classList.add('on');
+      setTimeout(() => { location.href = url.href; }, 360);
+    });
+  }
+
+  /* ---------- Careers board ---------- */
+  const board = document.querySelector('[data-jobs]');
+  if (board) {
+    const jobs = (window.ICEBREAKER_JOBS || []).slice().sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+    const search = document.querySelector('[data-search]');
+    const typeBtns = document.querySelectorAll('[data-toolbar] .seg button');
+    const countLine = document.querySelector('[data-count-line]');
+    const empty = document.querySelector('[data-empty]');
+    const stats = document.querySelector('[data-jobstats]');
+    let q = '', type = '';
+    const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+    const isNew = (d) => (Date.now() - new Date(d).getTime()) < 21 * 86400000;
+    const pin = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg>';
+    const card = (j) => `
+      <article class="job${isNew(j.createdAt) ? ' is-new' : ''}" id="job-${j.id}">
+        <div class="top">
+          <div><h3>${esc(j.jobTitle)}</h3><div class="co"><b>${esc(j.company)}</b> · ${esc(j.city)}, ${esc(j.stateProvince)}</div></div>
+          ${isNew(j.createdAt) ? '<span class="new">New</span>' : ''}
+        </div>
+        <div class="chips">${(j.locationType || []).map((t) => `<span class="chip">${pin}${esc(t)}</span>`).join('')}</div>
+        <div class="pay"><div><span class="k">Base pay</span><span class="v">${esc(j.basePay)}</span></div><div><span class="k">Commission</span><span class="v">${esc(j.commission || 'Discussed on the call')}</span></div></div>
+        <p class="sum">${esc(j.jobDescription)}</p>
+        <div class="details" id="details-${j.id}" hidden>
+          <div><h4>What you’ll do</h4><ul>${(j.whatYoullDo || []).map((x) => `<li>${esc(x)}</li>`).join('')}</ul></div>
+          <div><h4>What we’re looking for</h4><ul>${(j.requirements || []).map((x) => `<li>${esc(x)}</li>`).join('')}</ul></div>
+        </div>
+        <div class="actions">
+          <a class="btn btn-primary btn-sm" href="${esc(j.applyLink)}">Apply for this role <span class="arrow">→</span></a>
+          <button class="btn btn-secondary btn-sm" type="button" data-toggle="${j.id}" aria-expanded="false" aria-controls="details-${j.id}">Full details</button>
+          <button class="share" type="button" data-share="${j.id}">Share</button>
+        </div>
+      </article>`;
+    const render = () => {
+      const ql = q.trim().toLowerCase();
+      const rows = jobs.filter((j) => (!type || (j.locationType || []).includes(type)) && (!ql || [j.jobTitle, j.company, j.city, j.stateProvince].join(' ').toLowerCase().includes(ql)));
+      board.innerHTML = rows.map(card).join('');
+      empty.hidden = rows.length > 0;
+      countLine.textContent = rows.length + (rows.length === 1 ? ' role' : ' roles') + (type || ql ? ' matching' : ' open');
+      board.querySelectorAll('[data-toggle]').forEach((b) => b.addEventListener('click', () => {
+        const d = document.getElementById('details-' + b.dataset.toggle); const open = d.hidden; d.hidden = !open;
+        b.setAttribute('aria-expanded', String(open)); b.textContent = open ? 'Hide details' : 'Full details';
+      }));
+      board.querySelectorAll('[data-share]').forEach((b) => b.addEventListener('click', async () => {
+        const url = location.origin + location.pathname + '#job-' + b.dataset.share;
+        const j = jobs.find((x) => String(x.id) === b.dataset.share);
+        try { if (navigator.share) await navigator.share({ title: j.jobTitle + ' at ' + j.company, url }); else { await navigator.clipboard.writeText(url); b.textContent = 'Link copied'; setTimeout(() => { b.textContent = 'Share'; }, 1600); } } catch (e) {}
+      }));
+      if (location.hash.startsWith('#job-')) { const t = document.querySelector(location.hash); if (t) { const d = t.querySelector('.details'); if (d) { d.hidden = false; t.querySelector('[data-toggle]').textContent = 'Hide details'; } } }
+    };
+    if (search) search.addEventListener('input', () => { q = search.value; render(); });
+    typeBtns.forEach((b) => b.addEventListener('click', () => { type = b.dataset.type; typeBtns.forEach((x) => x.setAttribute('aria-pressed', String(x === b))); render(); }));
+    if (stats) {
+      stats.querySelector('[data-stat="roles"]').textContent = jobs.length;
+      stats.querySelector('[data-stat="companies"]').textContent = new Set(jobs.map((j) => j.company)).size;
+      const latest = jobs.reduce((m, j) => Math.max(m, new Date(j.createdAt).getTime()), 0);
+      stats.querySelector('[data-stat="updated"]').textContent = latest ? new Date(latest).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : '—';
+    }
+    render();
   }
 })();
