@@ -228,6 +228,8 @@ a:focus-visible, button:focus-visible, input:focus-visible, summary:focus-visibl
 .phase .when { font-family: var(--mono); font-size: .68rem; letter-spacing: .14em; text-transform: uppercase; color: var(--ice); }
 .phase h3 { font-size: clamp(1.7rem, 2.6vw, 2.3rem); letter-spacing: -.03em; }
 .phase p { color: var(--fg2); max-width: 54ch; }
+.phase .get { margin-top: 6px; padding: 16px 0 0; border-top: 1px dashed var(--line2); color: var(--fg); font-size: 1.02rem; max-width: 54ch; }
+.phase .get span { display: block; font-family: var(--mono); font-size: .64rem; letter-spacing: .14em; text-transform: uppercase; color: var(--fg3); margin-bottom: 6px; }
 .glass { background: var(--glass); border: 1px solid var(--glass-line); border-radius: 18px; padding: 20px 22px; position: relative; overflow: hidden; }
 .glass::before { content: ""; position: absolute; inset: 0; background: radial-gradient(360px circle at var(--mx, 50%) var(--my, 0%), rgba(191,227,255,.12), transparent 60%); opacity: 0; transition: opacity .3s ease; pointer-events: none; }
 .glass:hover::before { opacity: 1; }
