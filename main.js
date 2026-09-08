@@ -342,4 +342,33 @@
     }
     render();
   }
+
+  /* ---------- Book page: Calendly inline, themed to the ground ---------- */
+  const calHost = document.querySelector('[data-calendly]');
+  if (calHost) {
+    const base = 'https://calendly.com/icebreakerbd/meeting-with-abie-braha';
+    const q = new URLSearchParams(location.search);
+    const p = new URLSearchParams({ hide_gdpr_banner: '1', background_color: '0d1119', text_color: 'f2f5f9', primary_color: '6c9bff' });
+    ['name', 'email', 'utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term'].forEach((k) => { if (q.get(k)) p.set(k, q.get(k)); });
+    const url = base + '?' + p.toString();
+    const init = () => { if (window.Calendly) window.Calendly.initInlineWidget({ url, parentElement: calHost }); };
+    const s = document.createElement('script'); s.src = 'https://assets.calendly.com/assets/external/widget.js'; s.async = true; s.onload = init; document.head.appendChild(s);
+    window.addEventListener('message', (e) => {
+      if (e.origin !== 'https://calendly.com' || !e.data || e.data.event !== 'calendly.event_scheduled') return;
+      const frame = document.querySelector('.cal-frame'); const done = document.querySelector('[data-booked]');
+      if (frame) frame.hidden = true;
+      if (done) { done.hidden = false; done.classList.add('in'); done.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'center' }); }
+    });
+  }
+
+  /* ---------- Resources hub: topic filter ---------- */
+  const cats = document.querySelector('[data-cats]'); const resList = document.querySelector('[data-reslist]');
+  if (cats && resList) {
+    cats.addEventListener('click', (e) => {
+      const b = e.target.closest('button[data-cat]'); if (!b) return;
+      cats.querySelectorAll('button').forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
+      const c = b.dataset.cat;
+      resList.querySelectorAll('.res').forEach((r) => { r.hidden = !!c && r.dataset.cat !== c; });
+    });
+  }
 })();
