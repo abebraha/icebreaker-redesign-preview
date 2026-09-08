@@ -294,7 +294,9 @@ a:focus-visible, button:focus-visible, input:focus-visible, summary:focus-visibl
 .vis .head h2 { font-size: clamp(2.6rem, 5.4vw, 5rem); margin-bottom: 18px; }
 .vis .head .lead { margin: 0 auto; }
 .vis .ui { max-width: 980px; margin: 0 auto; }
-.vis .caps { max-width: 980px; margin: 36px auto 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
+.vis .caps { max-width: 980px; margin: 36px auto 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+@media (max-width: 900px) { .vis .caps { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 560px) { .vis .caps { grid-template-columns: 1fr; } }
 .vis .caps div { border-top: 1px solid var(--line); padding-top: 16px; color: var(--fg2); font-size: .95rem; }
 .vis .caps b { display: block; color: var(--fg); font-weight: 600; margin-bottom: 4px; }
 .vis .capnote { text-align: center; margin-top: 22px; font-family: var(--mono); font-size: .68rem; letter-spacing: .12em; text-transform: uppercase; color: var(--fg3); }
@@ -684,3 +686,12 @@ table.cmp tr.me td { background: rgba(31,79,224,.07); color: var(--fg); }
 .band figure { margin: 0; position: relative; overflow: hidden; height: clamp(300px, 44vw, 640px); }
 .band img { position: absolute; left: 0; top: -8%; width: 100%; height: 116%; object-fit: cover; object-position: center 35%; display: block; filter: saturate(.92); will-change: transform; }
 .band figure::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(7,9,14,.18), transparent 30%, transparent 70%, rgba(7,9,14,.35)); pointer-events: none; }
+
+/* ================= v5: tracker metric presets ================= */
+.ui-presets { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; padding: 14px 22px 0; }
+.ui-presets .lbl { font-family: var(--mono); font-size: .66rem; letter-spacing: .12em; text-transform: uppercase; color: var(--ink3); margin-right: 4px; }
+.ui-presets button { font: inherit; font-size: .8rem; font-weight: 500; color: var(--ink2); background: rgba(255,255,255,.04); border: 1px solid var(--glass-line); border-radius: 999px; padding: 7px 13px; cursor: pointer; transition: all .2s ease; }
+.ui-presets button:hover { color: var(--ink); border-color: var(--glass-line2); }
+.ui-presets button[aria-selected="true"] { background: var(--ice); color: #0A0D14; border-color: var(--ice); }
+.ui-tiles, .ui-chart .feed, .ui-chart .bars, .ui-rep .who, .ui-rep .stat { transition: opacity .28s ease; }
+.ui.swapping .ui-tiles, .ui.swapping .feed, .ui.swapping .bars, .ui.swapping .ui-rep .who, .ui.swapping .ui-rep .stat { opacity: 0; }

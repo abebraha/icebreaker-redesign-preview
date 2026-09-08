@@ -235,25 +235,31 @@
 <section class="vis sec s-dark" id="visibility" data-reveal>
   <div class="wrap">
     <div class="head">
-      <span class="eyebrow fade">Visibility</span>
+      <span class="eyebrow fade">Accountability</span>
       <h2>
         <span class="ln"><span>No black box.</span></span>
-        <span class="ln"><span class="it grad">You see every dial.</span></span>
+        <span class="ln"><span class="it grad">You see everything.</span></span>
       </h2>
-      <p class="lead fade d2">Every rep we manage runs on Icebreaker’s own KPI tracker — dials, conversations, meetings and pipeline pulled from your CRM and phone system automatically. You get a recap every Monday. We look every morning.</p>
+      <p class="lead fade d2">Calls are one metric. Your business might run on site visits, quotes, demos or LinkedIn conversations. We build a tracker around the four or five activities that actually lead to revenue for you, pull the numbers in automatically, and both of us look at it every day. Nobody gets to hide, including us.</p>
     </div>
 
-    <div class="ui" data-reveal aria-label="Icebreaker KPI tracker, sample rep view">
+    <div class="ui" data-reveal data-tracker aria-label="Icebreaker KPI tracker, sample rep view">
       <div class="ui-top">
         <div class="l"><img src="assets/icebreaker-white-logo.webp" alt=""> KPI Tracker</div>
         <div class="r"><span data-clock>Tue, Sep 8 · 9:04 AM</span></div>
       </div>
-      <div class="ui-rep">
-        <div class="av" aria-hidden="true">DR</div>
-        <div class="who"><b>Daniel R. · SDR</b><span>Logistics client · month 3</span></div>
-        <div class="stat">vs. last week<b>+12%</b></div>
+      <div class="ui-presets" role="tablist" aria-label="Example metric sets">
+        <span class="lbl">Built for</span>
+        <button type="button" role="tab" data-preset="phone" aria-selected="true">Phone-first outbound</button>
+        <button type="button" role="tab" data-preset="field" aria-selected="false">Field sales</button>
+        <button type="button" role="tab" data-preset="inbox" aria-selected="false">Email + LinkedIn</button>
       </div>
-      <div class="ui-tiles">
+      <div class="ui-rep">
+        <div class="av" aria-hidden="true" data-rep-av>DR</div>
+        <div class="who"><b data-rep-name>Daniel R. · SDR</b><span data-rep-ctx>Logistics client · month 3</span></div>
+        <div class="stat">vs. last week<b data-rep-delta>+12%</b></div>
+      </div>
+      <div class="ui-tiles" data-tiles>
         <div class="ui-tile"><span class="k">Dials today</span><span class="v num"><span data-count="84">0</span><small>/ 100</small></span><span class="bar"><i style="--w:84%"></i></span></div>
         <div class="ui-tile"><span class="k">Conversations</span><span class="v num" data-count="11">0</span><span class="d up">▲ 3 vs. yesterday</span></div>
         <div class="ui-tile"><span class="k">Meetings booked</span><span class="v num" data-count="2">0</span><span class="d">6 this week</span></div>
@@ -261,8 +267,8 @@
       </div>
       <div class="ui-chart">
         <div class="ui-box bars-wrap">
-          <div class="k"><span>Dials this week</span><span>target 100 / day</span></div>
-          <div class="bars" role="img" aria-label="Dials Monday to Friday: 96, 104, 88, 110, 84 so far today">
+          <div class="k"><span data-chart-k>Dials this week</span><span data-chart-t>target 100 / day</span></div>
+          <div class="bars" role="img" data-bars aria-label="Activity Monday to Friday against target">
             <div style="--h:87%"><span>Mon</span></div>
             <div style="--h:95%"><span>Tue</span></div>
             <div style="--h:80%"><span>Wed</span></div>
@@ -272,7 +278,7 @@
         </div>
         <div class="ui-box">
           <div class="k"><span>Live activity</span><span class="tag ice"><i class="pulse"></i>Synced</span></div>
-          <div class="feed">
+          <div class="feed" data-feed>
             <div><time>9:02</time><span><b>Meeting booked</b> — ops manager, 32-truck fleet, Thu 2:00</span></div>
             <div><time>8:47</time><span>Conversation · 4m 12s · follow-up set</span></div>
             <div><time>8:31</time><span>Call review from Icebreaker: “Tighten the opener. Good either/or.”</span></div>
@@ -280,10 +286,11 @@
         </div>
       </div>
     </div>
-    <div class="capnote">Sample rep · the real thing is live for every rep we manage</div>
+    <div class="capnote">Sample data · three of the metric sets we run · the real thing is live for every rep we manage</div>
 
     <div class="caps" data-stagger>
-      <div><b>Automatic, not self-reported.</b> Synced from Close, HubSpot, RingCentral and the dialer. Reps don’t fill in their own numbers.</div>
+      <div><b>Your metrics, not ours.</b> Dials for one client, site visits and quotes for another. We define the four or five activities that lead to revenue in your business and track exactly those.</div>
+      <div><b>Automatic, not self-reported.</b> Synced from your CRM, phone system and inbox: Close, HubSpot, RingCentral, Instantly. Reps don’t fill in their own numbers.</div>
       <div><b>Reviewed daily.</b> Below-target activity gets a call from us the same day, not a note at month end.</div>
       <div><b>Yours to keep.</b> The dashboard, the history and the CRM stay with you if we ever part ways.</div>
     </div>
@@ -436,6 +443,6 @@
 
 <div class="mobile-cta"><span>30 minutes, no pitch.</span><a class="btn" href="book.html">Book a call</a></div>
 
-<script src="main.js?v=6" defer></script>
+<script src="main.js?v=7" defer></script>
 </body>
 </html>

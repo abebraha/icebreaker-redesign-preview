@@ -371,4 +371,82 @@
       resList.querySelectorAll('.res').forEach((r) => { r.hidden = !!c && r.dataset.cat !== c; });
     });
   }
+
+  /* ---------- Tracker: example metric sets (phone / field / inbox) ---------- */
+  const trk = document.querySelector('[data-tracker]');
+  if (trk) {
+    const P = {
+      phone: {
+        av: 'DR', name: 'Daniel R. · SDR', ctx: 'Logistics client · month 3', delta: '+12%',
+        tiles: [
+          ['Dials today', '84<small>/ 100</small>', 'bar', 84],
+          ['Conversations', '11', 'up', '▲ 3 vs. yesterday'],
+          ['Meetings booked', '2', '', '6 this week'],
+          ['Pipeline', '$48.5K', 'up', '▲ $9.2K this week']],
+        chart: ['Dials this week', 'target 100 / day', [87, 95, 80, 100, 76]],
+        feed: [
+          ['9:02', '<b>Meeting booked</b> — ops manager, 32-truck fleet, Thu 2:00'],
+          ['8:47', 'Conversation · 4m 12s · follow-up set'],
+          ['8:31', 'Call review from Icebreaker: “Tighten the opener. Good either/or.”']]
+      },
+      field: {
+        av: 'MK', name: 'Moshe K. · Outside sales', ctx: 'Commercial cleaning client · month 5', delta: '+8%',
+        tiles: [
+          ['Site visits today', '3<small>/ 4</small>', 'bar', 75],
+          ['Quotes sent', '5', 'up', '▲ 2 vs. yesterday'],
+          ['Follow-ups done', '9<small>/ 12</small>', 'bar', 75],
+          ['Pipeline', '$131K', 'up', '▲ $18.4K this week']],
+        chart: ['Quotes this week', 'target 4 / day', [75, 100, 50, 100, 60]],
+        feed: [
+          ['9:02', '<b>Quote sent</b> — two-floor office, nightly service, $18.4K/yr'],
+          ['8:40', 'Site visit logged · GC in Newark · walkthrough Thu'],
+          ['8:15', 'Coaching from Icebreaker: “Ask for the walkthrough date on the first visit.”']]
+      },
+      inbox: {
+        av: 'SG', name: 'Sarah G. · BDR', ctx: 'Staffing client · month 2', delta: '+21%',
+        tiles: [
+          ['New conversations', '14<small>/ 15</small>', 'bar', 93],
+          ['Replies', '6', 'up', '▲ 4 vs. yesterday'],
+          ['Demos held', '2', '', '5 this week'],
+          ['Pipeline', '$22K', 'up', '▲ $6K this week']],
+        chart: ['Outreach this week', 'target 40 / day', [90, 100, 85, 95, 70]],
+        feed: [
+          ['9:02', '<b>Demo held</b> — HR lead, 60-person firm, proposal Fri'],
+          ['8:52', 'Reply · “send me pricing” · follow-up set for tomorrow'],
+          ['8:20', 'Coaching from Icebreaker: “Shorter first message. Lead with their number.”']]
+      }
+    };
+    const $ = (sel) => trk.querySelector(sel);
+    const btns = Array.from(trk.querySelectorAll('[data-preset]'));
+    const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Today'];
+    const render = (key) => {
+      const d = P[key]; if (!d) return;
+      $('[data-rep-av]').textContent = d.av; $('[data-rep-name]').textContent = d.name;
+      $('[data-rep-ctx]').textContent = d.ctx; $('[data-rep-delta]').textContent = d.delta;
+      $('[data-tiles]').innerHTML = d.tiles.map(([k, v, kind, extra]) =>
+        '<div class="ui-tile"><span class="k">' + k + '</span><span class="v num">' + v + '</span>' +
+        (kind === 'bar' ? '<span class="bar"><i style="--w:' + extra + '%"></i></span>' : '<span class="d' + (kind === 'up' ? ' up' : '') + '">' + extra + '</span>') + '</div>').join('');
+      $('[data-chart-k]').textContent = d.chart[0]; $('[data-chart-t]').textContent = d.chart[1];
+      $('[data-bars]').innerHTML = d.chart[2].map((h, i) => '<div' + (i === 4 ? ' class="today"' : '') + ' style="--h:' + h + '%"><span>' + days[i] + '</span></div>').join('');
+      $('[data-feed]').innerHTML = d.feed.map(([t, m]) => '<div><time>' + t + '</time><span>' + m + '</span></div>').join('');
+      btns.forEach((b) => b.setAttribute('aria-selected', String(b.dataset.preset === key)));
+    };
+    const swap = (key) => {
+      if (reduce) { render(key); return; }
+      trk.classList.add('swapping');
+      setTimeout(() => { render(key); trk.classList.remove('swapping'); }, 300);
+    };
+    let auto = null, touched = false; const order = ['phone', 'field', 'inbox']; let i = 0;
+    btns.forEach((b) => b.addEventListener('click', () => { touched = true; clearInterval(auto); auto = null; swap(b.dataset.preset); }));
+    // Cycle through the three sets while the tracker is on screen, until someone clicks.
+    if (!reduce && 'IntersectionObserver' in window) {
+      new IntersectionObserver((es) => {
+        es.forEach((e) => {
+          if (e.isIntersecting && auto === null && !touched) {
+            auto = setInterval(() => { i = (i + 1) % order.length; swap(order[i]); }, 6500);
+          } else if (!e.isIntersecting && auto) { clearInterval(auto); auto = null; }
+        });
+      }, { threshold: .5 }).observe(trk);
+    }
+  }
 })();
