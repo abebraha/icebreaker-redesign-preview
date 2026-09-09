@@ -203,7 +203,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, summary:focus-visibl
 .track { overflow: hidden; -webkit-mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent); mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent); }
 /* Two identical halves; each item carries its own trailing space so -50% lands exactly on the seam. Images have width/height attributes so the track is the same width before and after they load. */
 .track ul { display: flex; align-items: center; list-style: none; margin: 0; padding: 0; width: max-content; animation: marquee 62s linear infinite; will-change: transform; backface-visibility: hidden; }
-.track li { flex: none; height: 40px; display: flex; align-items: center; margin-right: 72px; }
+.track li { flex: none; height: 44px; display: flex; align-items: center; margin-right: 72px; }
 .track img { display: block; object-fit: contain; opacity: .7; transition: opacity .3s ease; }
 @media (hover: hover) { .track:hover ul { animation-play-state: paused; } .track li:hover img { opacity: 1; } }
 @keyframes marquee { from { transform: translate3d(0, 0, 0); } to { transform: translate3d(-50%, 0, 0); } }
@@ -755,11 +755,11 @@ table.cmp tr.me td { background: rgba(31,79,224,.07); color: var(--fg); }
 /* Client logo grid */
 .logogrid { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(6, 1fr); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 18px; overflow: hidden; }
 .logogrid li { background: var(--surface); display: grid; place-items: center; padding: 22px 18px; min-height: 96px; }
-.logogrid img { max-width: 120px; max-height: 40px; width: auto; height: auto; opacity: .8; transition: opacity .25s ease; }
+.logogrid img { display: block; opacity: .8; transition: opacity .25s ease; }
 .logogrid li:hover img { opacity: 1; }
 .logogrid li.more span { font-family: var(--mono); font-size: .7rem; letter-spacing: .14em; text-transform: uppercase; color: var(--fg3); }
 @media (max-width: 900px) { .logogrid { grid-template-columns: repeat(3, 1fr); } .logogrid li.more { grid-column: 1 / -1 !important; min-height: 64px; } }
-@media (max-width: 520px) { .logogrid { grid-template-columns: repeat(2, 1fr); } .logogrid img { max-width: 100px; } }
+@media (max-width: 520px) { .logogrid { grid-template-columns: repeat(2, 1fr); } }
 
 /* ================= v7: polish ================= */
 .burger svg[hidden] { display: none; }
