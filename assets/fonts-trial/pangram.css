@@ -1,0 +1,6 @@
+/* Type test: Pangram Pangram free-to-try files, personal use only, for evaluation on the preview only. */
+@font-face { font-family: "TrialDisplay"; src: url("pangram/display-500.otf") format("opentype"); font-weight: 500; font-display: swap; }
+@font-face { font-family: "TrialDisplay"; src: url("pangram/display-600.otf") format("opentype"); font-weight: 600; font-display: swap; }
+@font-face { font-family: "TrialDisplay"; src: url("pangram/display-700.otf") format("opentype"); font-weight: 700; font-display: swap; }
+@font-face { font-family: "TrialSerif"; src: url("pangram/serif-italic.otf") format("opentype"); font-style: italic; font-weight: 400; font-display: swap; }
+:root { --display: "TrialDisplay", "Inter Tight", "Inter", system-ui, sans-serif; --serif: "TrialSerif", "Instrument Serif", Georgia, serif; }

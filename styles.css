@@ -813,3 +813,11 @@ table.cmp tr.me td { background: rgba(31,79,224,.07); color: var(--fg); }
   .mobile-cta { transform: translateY(140%); opacity: 0; pointer-events: none; transition: transform .45s var(--ease), opacity .3s ease; }
   .mobile-cta.show { transform: none; opacity: 1; pointer-events: auto; }
 }
+
+/* Preview-only typeface switcher */
+.typetest { position: fixed; right: 14px; bottom: 14px; z-index: 57; display: flex; align-items: center; gap: 4px; background: rgba(13,17,25,.85); border: 1px solid var(--glass-line); border-radius: 999px; padding: 5px 6px 5px 12px; backdrop-filter: blur(10px); }
+.typetest span { font-family: var(--mono); font-size: .62rem; letter-spacing: .12em; text-transform: uppercase; color: var(--ink3); margin-right: 6px; }
+.typetest button { font: inherit; font-size: .74rem; font-weight: 500; color: var(--ink2); background: transparent; border: 1px solid transparent; border-radius: 999px; padding: 6px 10px; cursor: pointer; }
+.typetest button:hover { color: var(--ink); }
+.typetest button[aria-pressed="true"] { background: var(--ice); color: #0A0D14; }
+@media (max-width: 900px) { .typetest { bottom: 84px; right: 12px; } }
