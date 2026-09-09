@@ -7,6 +7,14 @@
 <meta name="description" content="Thirty minutes with Abe Braha. Bring your numbers, leave with a plan for your sales team, whether or not it's with Icebreaker.">
 <meta name="robots" content="noindex">
 <meta name="theme-color" content="#07090E">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Icebreaker Sales Development">
+<meta property="og:title" content="Book a 30-minute call | Icebreaker">
+<meta property="og:description" content="Thirty minutes with Abe Braha. Bring your numbers, leave with a plan for your sales team, whether or not it's with Icebreaker.">
+<meta property="og:image" content="https://abebraha.github.io/icebreaker-redesign-preview/assets/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="assets/favicon.ico">
 <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
@@ -14,10 +22,11 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preconnect" href="https://assets.calendly.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@500;600;700&family=Instrument+Serif:ital@1&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
-<link rel="stylesheet" href="styles.css?v=8">
+<link rel="stylesheet" href="styles.css?v=9">
 </head>
 <body>
 
+<a class="skip" href="#main">Skip to content</a>
 <div class="preview"><b>Preview</b> · not the live site</div>
 
 <header class="hdr">
@@ -51,7 +60,7 @@
   </div>
 </header>
 
-<main>
+<main id="main">
 
 <section class="book s-dark" data-reveal data-reveal-now>
   <div class="wrap">
@@ -71,7 +80,7 @@
         </div>
 
         <div class="host fade d4">
-          <img src="assets/abe-book.jpg" alt="Abe Braha" width="800" height="1000">
+          <img src="assets/abe-book.jpg" alt="Abe Braha" width="800" height="1000" loading="lazy" decoding="async">
           <div>
             <b>You’ll meet Abe Braha</b>
             <span>Founder of Icebreaker. He’s built sales teams for 50+ owner-led companies and still takes every first call himself.</span>
@@ -83,6 +92,7 @@
         <div class="cal-frame glass">
           <div class="cal-head"><span class="tag ice"><i class="pulse"></i>Live availability</span><span class="mono">30 min · Google Meet or phone</span></div>
           <div class="cal-embed" data-calendly style="min-width:320px;height:680px"></div>
+          <div class="cal-fallback" data-cal-fallback hidden><span>The calendar didn’t load here.</span><a class="btn btn-primary btn-sm" href="https://calendly.com/icebreakerbd/meeting-with-abie-braha">Open the calendar in a new tab</a></div>
           <noscript><a class="btn btn-primary" href="https://calendly.com/icebreakerbd/meeting-with-abie-braha">Open the calendar</a></noscript>
         </div>
         <div class="booked glass" data-booked hidden>
@@ -94,7 +104,8 @@
             <a class="btn btn-secondary btn-sm" href="resources.html">Browse the resources</a>
           </div>
         </div>
-        <p class="alt small">Prefer email or phone? <a href="mailto:info@icebreakerbd.com">info@icebreakerbd.com</a> · <a href="tel:+19178096610">(917) 809-6610</a></p>
+        <p class="alt small"><span>Not ready to book?</span><a href="fit.html">Take the two-minute fit check</a></p>
+        <p class="alt small"><span>Prefer email or phone?</span><a href="mailto:info@icebreakerbd.com">info@icebreakerbd.com</a><a href="tel:+19178096610">(917) 809-6610</a></p>
       </div>
     </div>
   </div>
@@ -161,6 +172,6 @@
   </div>
 </footer>
 
-<script src="main.js?v=8" defer></script>
+<script src="main.js?v=9" defer></script>
 </body>
 </html>

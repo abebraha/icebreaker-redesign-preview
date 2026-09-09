@@ -353,6 +353,11 @@
     const url = base + '?' + p.toString();
     const init = () => { if (window.Calendly) window.Calendly.initInlineWidget({ url, parentElement: calHost }); };
     const s = document.createElement('script'); s.src = 'https://assets.calendly.com/assets/external/widget.js'; s.async = true; s.onload = init; document.head.appendChild(s);
+    // If the embed hasn't rendered in 6s (blocked script, strict privacy settings), show a plain link instead of an empty box.
+    setTimeout(() => {
+      if (calHost.querySelector('iframe')) return;
+      const fb = document.querySelector('[data-cal-fallback]'); if (fb) { fb.hidden = false; calHost.style.display = 'none'; }
+    }, 6000);
     window.addEventListener('message', (e) => {
       if (e.origin !== 'https://calendly.com' || !e.data || e.data.event !== 'calendly.event_scheduled') return;
       const frame = document.querySelector('.cal-frame'); const done = document.querySelector('[data-booked]');
