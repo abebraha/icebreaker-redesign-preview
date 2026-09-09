@@ -201,13 +201,14 @@ a:focus-visible, button:focus-visible, input:focus-visible, summary:focus-visibl
 .marquee { padding: 40px 0; border-top: 1px solid var(--glass-line); border-bottom: 1px solid var(--glass-line); }
 .marquee .lbl { font-family: var(--mono); font-size: .7rem; letter-spacing: .14em; text-transform: uppercase; color: var(--ink3); text-align: center; margin-bottom: 26px; }
 .track { overflow: hidden; -webkit-mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent); mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent); }
-.track ul { display: flex; gap: 72px; align-items: center; list-style: none; margin: 0; padding: 0; width: max-content; animation: marquee 62s linear infinite; }
-.track:hover ul { animation-play-state: paused; }
-.track li { flex: none; height: 40px; display: flex; align-items: center; }
-.track img { height: 32px; width: auto; max-width: 150px; object-fit: contain; opacity: .7; transition: opacity .3s ease; }
-.track li:hover img { opacity: 1; }
-@keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
-@media (prefers-reduced-motion: reduce) { .track ul { animation: none; flex-wrap: wrap; width: auto; justify-content: center; } }
+/* Two identical halves; each item carries its own trailing space so -50% lands exactly on the seam. Images have width/height attributes so the track is the same width before and after they load. */
+.track ul { display: flex; align-items: center; list-style: none; margin: 0; padding: 0; width: max-content; animation: marquee 62s linear infinite; will-change: transform; backface-visibility: hidden; }
+.track li { flex: none; height: 40px; display: flex; align-items: center; margin-right: 72px; }
+.track img { display: block; object-fit: contain; opacity: .7; transition: opacity .3s ease; }
+@media (hover: hover) { .track:hover ul { animation-play-state: paused; } .track li:hover img { opacity: 1; } }
+@keyframes marquee { from { transform: translate3d(0, 0, 0); } to { transform: translate3d(-50%, 0, 0); } }
+@media (max-width: 600px) { .track li { margin-right: 44px; } .track ul { animation-duration: 64s; } }
+@media (prefers-reduced-motion: reduce) { .track ul { animation: none; flex-wrap: wrap; width: auto; justify-content: center; } .track li { margin: 0 24px 16px; } }
 
 /* ---------- Manifesto (paper) ---------- */
 .manifesto .wrap { display: grid; grid-template-columns: 1.1fr .9fr; gap: 72px; align-items: start; }
