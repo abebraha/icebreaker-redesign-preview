@@ -160,8 +160,10 @@ a:focus-visible, button:focus-visible, input:focus-visible, summary:focus-visibl
 
 /* Line-mask reveals */
 /* Line-mask reveal. The mask box is padded (and pulled back with negative margins) so descenders, ascenders and italic overhangs are never clipped once the line has landed. */
-.ln { display: block; overflow: hidden; padding: .1em .14em .26em; margin: -.1em -.14em -.26em; }
-.ln > span { display: block; transform: translateY(140%); transition: transform 1.1s var(--ease); }
+.ln { display: block; overflow: hidden; padding: .12em .16em .34em; margin: -.12em -.16em -.34em; }
+.ln > span { display: block; transform: translateY(150%); transition: transform 1.1s var(--ease); }
+/* gradient text clips to the box it is painted in; give it the same slack as the mask so descenders (y, g, p) survive */
+.ln > span.grad { padding: .12em .16em .34em; margin: -.12em -.16em -.34em; }
 .in .ln > span, .ln.in > span { transform: none; }
 .ln:nth-child(2) > span { transition-delay: .09s; }
 .ln:nth-child(3) > span { transition-delay: .18s; }
