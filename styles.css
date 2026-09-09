@@ -159,8 +159,9 @@ a:focus-visible, button:focus-visible, input:focus-visible, summary:focus-visibl
 @media (max-width: 900px) { .preview { display: none; } }
 
 /* Line-mask reveals */
-.ln { display: block; overflow: hidden; }
-.ln > span { display: block; transform: translateY(112%); transition: transform 1.1s var(--ease); }
+/* Line-mask reveal. The mask box is padded (and pulled back with negative margins) so descenders, ascenders and italic overhangs are never clipped once the line has landed. */
+.ln { display: block; overflow: hidden; padding: .1em .14em .26em; margin: -.1em -.14em -.26em; }
+.ln > span { display: block; transform: translateY(140%); transition: transform 1.1s var(--ease); }
 .in .ln > span, .ln.in > span { transform: none; }
 .ln:nth-child(2) > span { transition-delay: .09s; }
 .ln:nth-child(3) > span { transition-delay: .18s; }
@@ -814,10 +815,3 @@ table.cmp tr.me td { background: rgba(31,79,224,.07); color: var(--fg); }
   .mobile-cta.show { transform: none; opacity: 1; pointer-events: auto; }
 }
 
-/* Preview-only typeface switcher */
-.typetest { position: fixed; right: 14px; bottom: 14px; z-index: 57; display: flex; align-items: center; gap: 4px; background: rgba(13,17,25,.85); border: 1px solid var(--glass-line); border-radius: 999px; padding: 5px 6px 5px 12px; backdrop-filter: blur(10px); }
-.typetest span { font-family: var(--mono); font-size: .62rem; letter-spacing: .12em; text-transform: uppercase; color: var(--ink3); margin-right: 6px; }
-.typetest button { font: inherit; font-size: .74rem; font-weight: 500; color: var(--ink2); background: transparent; border: 1px solid transparent; border-radius: 999px; padding: 6px 10px; cursor: pointer; }
-.typetest button:hover { color: var(--ink); }
-.typetest button[aria-pressed="true"] { background: var(--ice); color: #0A0D14; }
-@media (max-width: 900px) { .typetest { bottom: 84px; right: 12px; } }

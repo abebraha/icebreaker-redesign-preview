@@ -176,21 +176,6 @@
     showBar(); window.addEventListener('scroll', showBar, { passive: true });
   }
 
-  /* ---------- Preview only: typeface test switcher (never shipped to production) ---------- */
-  const badge = document.querySelector('.preview');
-  if (badge) {
-    let pick = '';
-    try { pick = localStorage.getItem('typetest') || ''; } catch (e) {}
-    const base = location.pathname.includes('/articles/') ? '../' : '';
-    if (pick === 'klim' || pick === 'pangram') {
-      const l = document.createElement('link'); l.rel = 'stylesheet'; l.href = base + 'assets/fonts-trial/' + pick + '.css'; document.head.appendChild(l);
-    }
-    const ui = document.createElement('div'); ui.className = 'typetest';
-    ui.innerHTML = '<span>Type</span>' + [['', 'Current'], ['klim', 'Klim'], ['pangram', 'Pangram']].map(([k, n]) => '<button type="button" data-tt="' + k + '"' + (pick === k ? ' aria-pressed="true"' : '') + '>' + n + '</button>').join('');
-    ui.addEventListener('click', (e) => { const b = e.target.closest('[data-tt]'); if (!b) return; try { localStorage.setItem('typetest', b.dataset.tt); } catch (err) {} location.reload(); });
-    document.body.appendChild(ui);
-  }
-
   /* ---------- Year ---------- */
   document.querySelectorAll('[data-year]').forEach((el) => { el.textContent = new Date().getFullYear(); });
 
