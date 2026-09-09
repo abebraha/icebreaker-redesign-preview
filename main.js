@@ -128,22 +128,20 @@
     const segs = calc.querySelectorAll('.seg button');
     const FIRST = 3500, ADD = 1500, CAP = 7000, FEE = 3500;
     const money = (n) => '$' + n.toLocaleString('en-US');
-    const baseIn = calc.querySelector('[data-base]'), mtgIn = calc.querySelector('[data-mtg]'), PER_MEETING = 150;
+    const baseIn = calc.querySelector('[data-base]');
     const $ = (sel) => calc.querySelector(sel);
     const update = () => {
       const n = parseInt(range.value, 10), rawv = FIRST + ADD * (n - 1), m = Math.min(rawv, CAP);
       out.textContent = n + (n === 1 ? ' rep' : ' reps');
       monthly.textContent = money(m) + '/mo'; onetime.textContent = money(FEE * n);
       let total = m;
-      if (baseIn && mtgIn) {
-        const base = parseInt(baseIn.value, 10), mtg = parseInt(mtgIn.value, 10);
-        const repBase = Math.round(base / 12) * n, repMtg = mtg * PER_MEETING * n;
-        total = m + repBase + repMtg;
+      if (baseIn) {
+        const base = parseInt(baseIn.value, 10);
+        const repBase = Math.round(base / 12) * n;
+        total = m + repBase;
         baseIn.previousElementSibling.querySelector('output').textContent = money(base);
-        mtgIn.previousElementSibling.querySelector('output').textContent = mtg + (mtg === 1 ? ' meeting' : ' meetings');
-        $('[data-repbase]').textContent = money(repBase) + '/mo'; $('[data-repmtg]').textContent = money(repMtg) + '/mo';
+        $('[data-repbase]').textContent = money(repBase) + '/mo';
         $('[data-base-note]').textContent = money(base) + ' a year' + (n > 1 ? ' each, ' + n + ' reps' : '') + ', paid by you';
-        $('[data-mtg-note]').textContent = mtg + ' a month at $' + PER_MEETING + (n > 1 ? ', per rep' : '');
         $('[data-allin]').textContent = money(total) + '/mo';
       }
       first.textContent = money(total * 12 + FEE * n);
@@ -153,7 +151,7 @@
       segs.forEach((b) => b.setAttribute('aria-pressed', String(parseInt(b.dataset.reps, 10) === n)));
     };
     range.addEventListener('input', update);
-    [baseIn, mtgIn].forEach((el) => el && el.addEventListener('input', update));
+    if (baseIn) baseIn.addEventListener('input', update);
     segs.forEach((b) => b.addEventListener('click', () => { range.value = b.dataset.reps; update(); }));
     update();
   }
