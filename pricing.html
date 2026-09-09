@@ -21,7 +21,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@500;600;700&family=Instrument+Serif:ital@1&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
-<link rel="stylesheet" href="styles.css?v=9">
+<link rel="stylesheet" href="styles.css?v=10">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What’s included in the $3,500 recruiting fee?","acceptedAnswer":{"@type":"Answer","text":"Everything up to the day your rep starts: the job description, sourcing, screening, scorecard interviews, reference checks and the offer. There are no additional charges during recruiting, however long it takes."}},{"@type":"Question","name":"When does monthly billing start?","acceptedAnswer":{"@type":"Answer","text":"The day your rep starts working. If recruiting takes six weeks, you pay nothing monthly for six weeks."}},{"@type":"Question","name":"What happens if a placed rep doesn’t work out?","acceptedAnswer":{"@type":"Answer","text":"If a rep doesn’t meet expectations in the first 90 days, we work the problem with you first. If it’s the wrong person, we replace them at no additional recruiting fee."}},{"@type":"Question","name":"Do you pay the rep’s salary?","acceptedAnswer":{"@type":"Answer","text":"No. The rep is your employee and you pay their salary and commission directly. Our fee covers recruiting, the system, and day-to-day management. We design the comp plan with you so both sides make sense."}},{"@type":"Question","name":"Can I hire more than one rep?","acceptedAnswer":{"@type":"Answer","text":"That’s the model. First rep $3,500/mo, each additional rep $1,500/mo, total capped at $7,000/mo no matter how large the team gets. Each placement carries the one-time $3,500 recruiting fee."}},{"@type":"Question","name":"How long does recruiting take?","acceptedAnswer":{"@type":"Answer","text":"Most placements land in four to six weeks. Some markets take longer; you’re only ever charged the one recruiting fee regardless of timeline."}},{"@type":"Question","name":"What happens when we’re ready for an in-house sales manager?","acceptedAnswer":{"@type":"Answer","text":"We help you graduate. When the team justifies full-time leadership, we recruit your sales manager for a standard placement fee, transition management over 60 days, and stay available for advisory if you want it."}}]}</script>
 </head>
 <body>
@@ -131,12 +131,27 @@
           <button type="button" data-reps="3" aria-pressed="false">Three</button>
           <button type="button" data-reps="4" aria-pressed="false">A full pod</button>
         </div>
-        <p class="small">Rep salaries are separate. Typical first-year OTE for an SDR we place is $65–85K, set in the comp plan we build with you.</p>
+        <h3 style="margin-top:8px">What the rep costs you</h3>
+        <p>Your rep is your employee. Set the base and the per-meeting payment and the calculator shows the whole picture, not just our fee.</p>
+        <div class="reps">
+          <label for="base">Base salary, per year <output for="base">$55,000</output></label>
+          <input type="range" id="base" min="40000" max="80000" step="2500" value="55000" data-base>
+          <div class="repticks"><span>$40K</span><span>$60K</span><span>$80K</span></div>
+        </div>
+        <div class="reps">
+          <label for="mtg">Meetings held per month, at $150 each <output for="mtg">15 meetings</output></label>
+          <input type="range" id="mtg" min="0" max="40" step="5" value="15" data-mtg>
+          <div class="repticks"><span>0</span><span>20</span><span>40</span></div>
+        </div>
+        <p class="small">Commission on closed business is on top of this, and it’s the good kind of cost. Typical first-year OTE for an SDR we place is $65–85K.</p>
       </div>
       <div class="out">
-        <div class="orow total"><div class="k">Management fee<small>recruiting, system, daily management</small></div><div class="v num" data-monthly>$3,500/mo</div></div>
+        <div class="orow total"><div class="k">All-in, per month<small>your rep plus Icebreaker, before commission</small></div><div class="v num" data-allin>$10,333/mo</div></div>
+        <div class="orow"><div class="k">Icebreaker<small>recruiting, system, daily management</small></div><div class="v num" data-monthly>$3,500/mo</div></div>
+        <div class="orow"><div class="k">Your rep, base<small data-base-note>$55,000 a year, paid by you</small></div><div class="v num" data-repbase>$4,583/mo</div></div>
+        <div class="orow"><div class="k">Your rep, meetings held<small data-mtg-note>15 a month at $150</small></div><div class="v num" data-repmtg>$2,250/mo</div></div>
         <div class="orow"><div class="k">One-time recruiting fee<small>$3,500 per placement, paid once</small></div><div class="v num ice" data-onetime>$3,500</div></div>
-        <div class="orow"><div class="k">Year one, management<small>12 months at the monthly fee</small></div><div class="v num" data-first>$42,000</div></div>
+        <div class="orow"><div class="k">Year one, all-in<small>12 months plus the recruiting fee</small></div><div class="v num" data-first>$127,500</div></div>
         <div class="capnote" data-capnote>$3,500 of headroom before the $7,000 cap.</div>
         <div class="timeline">
           <div><b>Weeks 1–6</b><span>Recruiting. No monthly fee yet</span></div>
@@ -288,6 +303,6 @@
 
 <div class="mobile-cta"><span>30 minutes, no pitch.</span><a class="btn" href="book.html">Book a call</a></div>
 
-<script src="main.js?v=9" defer></script>
+<script src="main.js?v=10" defer></script>
 </body>
 </html>

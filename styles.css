@@ -1,6 +1,20 @@
 /* Icebreaker site v2
    Editorial + cinematic: deep ground, one cobalt→ice gradient, grotesk display with serif-italic accents, grain, glass. */
 
+/* ---------- Typefaces ----------
+   The site runs on free Google fonts. To move to licensed faces, drop the files in /assets/fonts,
+   uncomment the @font-face blocks, and change the four tokens below. Nothing else needs to change.
+   Recommended pairing (see the blueprint): PP Neue Montreal or Söhne for --display/--body,
+   PP Editorial New or Tiempos Headline Italic for --serif, JetBrains Mono stays.
+
+@font-face { font-family: "Display"; src: url("assets/fonts/display-medium.woff2") format("woff2"); font-weight: 500; font-display: swap; }
+@font-face { font-family: "Display"; src: url("assets/fonts/display-semibold.woff2") format("woff2"); font-weight: 600; font-display: swap; }
+@font-face { font-family: "Display"; src: url("assets/fonts/display-bold.woff2") format("woff2"); font-weight: 700; font-display: swap; }
+@font-face { font-family: "Serif"; src: url("assets/fonts/serif-italic.woff2") format("woff2"); font-style: italic; font-weight: 400; font-display: swap; }
+@font-face { font-family: "Body"; src: url("assets/fonts/body-regular.woff2") format("woff2"); font-weight: 400; font-display: swap; }
+@font-face { font-family: "Body"; src: url("assets/fonts/body-medium.woff2") format("woff2"); font-weight: 500; font-display: swap; }
+@font-face { font-family: "Body"; src: url("assets/fonts/body-semibold.woff2") format("woff2"); font-weight: 600; font-display: swap; }
+*/
 :root {
   --ground: #07090E;
   --ground2: #0D1119;
@@ -445,6 +459,7 @@ table.cmp tr.me td { background: rgba(31,79,224,.07); color: var(--fg); }
 
 .study { display: grid; grid-template-columns: 1fr 1fr; gap: 44px; padding: 64px 0; border-top: 1px solid var(--line); }
 .study:first-of-type { border-top: 0; padding-top: 0; }
+.study[hidden] { display: none; }
 .study .head { grid-column: 1 / -1; display: grid; gap: 12px; }
 .study .head .logo img { max-height: 34px; max-width: 180px; width: auto; }
 .study .head h2 { font-size: clamp(1.9rem, 3.4vw, 2.8rem); }
