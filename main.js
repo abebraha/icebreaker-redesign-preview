@@ -1,4 +1,4 @@
-/* Icebreaker redesign preview v2 — motion system, hero field, small behaviours. No dependencies. */
+/* Icebreaker site: motion system, hero field, small behaviours. No dependencies. */
 (function () {
   const doc = document.documentElement;
   doc.classList.remove('no-js');
@@ -132,7 +132,7 @@
       const n = parseInt(range.value, 10), rawv = FIRST + ADD * (n - 1), m = Math.min(rawv, CAP);
       out.textContent = n + (n === 1 ? ' rep' : ' reps');
       monthly.textContent = money(m) + '/mo'; onetime.textContent = money(FEE * n); first.textContent = money(m * 12);
-      if (rawv > CAP) capnote.innerHTML = '<span class="ok">Cap reached.</span> ' + n + ' reps would be ' + money(rawv) + '/mo without it — you pay ' + money(CAP) + '.';
+      if (rawv > CAP) capnote.innerHTML = '<span class="ok">Cap reached.</span> ' + n + ' reps would be ' + money(rawv) + '/mo without it. You pay ' + money(CAP) + '.';
       else if (rawv === CAP) capnote.innerHTML = '<span class="ok">At the cap.</span> Every rep after this one is free to manage.';
       else capnote.textContent = money(CAP - rawv) + ' of headroom before the ' + money(CAP) + ' cap.';
       segs.forEach((b) => b.setAttribute('aria-pressed', String(parseInt(b.dataset.reps, 10) === n)));
@@ -286,7 +286,11 @@
   /* ---------- Careers board ---------- */
   const board = document.querySelector('[data-jobs]');
   if (board) {
-    const jobs = (window.ICEBREAKER_JOBS || []).slice().sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+    const APPLY = 'https://app.icebreakerbd.com/recruiting/apply?ref=9';
+    const lines = (v) => Array.isArray(v) ? v : String(v || '').split(/\r?\n/).map((x) => x.replace(/^\s*[•\-–*]\s*/, '').trim()).filter(Boolean);
+    const norm = (j) => Object.assign({}, j, { locationType: Array.isArray(j.locationType) ? j.locationType : lines(j.locationType), whatYoullDo: lines(j.whatYoullDo), requirements: lines(j.requirements), applyLink: j.applyLink || APPLY });
+    const sortJobs = (list) => list.map(norm).sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+    let jobs = sortJobs(window.ICEBREAKER_JOBS || []);
     const search = document.querySelector('[data-search]');
     const typeBtns = document.querySelectorAll('[data-toolbar] .seg button');
     const countLine = document.querySelector('[data-count-line]');
@@ -334,13 +338,34 @@
     };
     if (search) search.addEventListener('input', () => { q = search.value; render(); });
     typeBtns.forEach((b) => b.addEventListener('click', () => { type = b.dataset.type; typeBtns.forEach((x) => x.setAttribute('aria-pressed', String(x === b))); render(); }));
-    if (stats) {
+    const updateStats = () => {
+      if (!stats) return;
       stats.querySelector('[data-stat="roles"]').textContent = jobs.length;
       stats.querySelector('[data-stat="companies"]').textContent = new Set(jobs.map((j) => j.company)).size;
       const latest = jobs.reduce((m, j) => Math.max(m, new Date(j.createdAt).getTime()), 0);
-      stats.querySelector('[data-stat="updated"]').textContent = latest ? new Date(latest).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : '—';
-    }
-    render();
+      stats.querySelector('[data-stat="updated"]').textContent = latest ? new Date(latest).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : '…';
+    };
+    // Google Jobs: one JobPosting per live role, built from the same data the cards use.
+    const schema = () => {
+      document.querySelectorAll('script[data-jobs-ld]').forEach((n) => n.remove());
+      const el = document.createElement('script'); el.type = 'application/ld+json'; el.setAttribute('data-jobs-ld', '');
+      el.textContent = JSON.stringify(jobs.map((j) => ({
+        '@context': 'https://schema.org', '@type': 'JobPosting', title: j.jobTitle, datePosted: String(j.createdAt).slice(0, 10),
+        hiringOrganization: { '@type': 'Organization', name: j.company },
+        jobLocation: { '@type': 'Place', address: { '@type': 'PostalAddress', addressLocality: j.city, addressRegion: j.stateProvince, addressCountry: 'US' } },
+        jobLocationType: (j.locationType || []).includes('Remote') ? 'TELECOMMUTE' : undefined,
+        employmentType: 'FULL_TIME', description: j.jobDescription + ' Base pay: ' + j.basePay + (j.commission ? '. Commission: ' + j.commission : ''),
+        directApply: true, url: location.origin + location.pathname + '#job-' + j.id
+      })));
+      document.head.appendChild(el);
+    };
+    updateStats(); render();
+    // Live roles from the API. Same origin in production; the preview falls back to the snapshot above.
+    const api = board.dataset.api || '/api/jobs';
+    fetch(api, { headers: { Accept: 'application/json' } })
+      .then((r) => (r.ok ? r.json() : Promise.reject(r.status)))
+      .then((j) => { const list = Array.isArray(j) ? j : (j && j.data) || []; if (list.length) { jobs = sortJobs(list); updateStats(); render(); schema(); } })
+      .catch(() => {});
   }
 
   /* ---------- Book page: Calendly inline, themed to the ground ---------- */
@@ -390,7 +415,7 @@
           ['Pipeline', '$48.5K', 'up', '▲ $9.2K this week']],
         chart: ['Dials this week', 'target 100 / day', [87, 95, 80, 100, 76]],
         feed: [
-          ['9:02', '<b>Meeting booked</b> — ops manager, 32-truck fleet, Thu 2:00'],
+          ['9:02', '<b>Meeting booked</b> · ops manager, 32-truck fleet, Thu 2:00'],
           ['8:47', 'Conversation · 4m 12s · follow-up set'],
           ['8:31', 'Call review from Icebreaker: “Tighten the opener. Good either/or.”']]
       },
@@ -403,7 +428,7 @@
           ['Pipeline', '$131K', 'up', '▲ $18.4K this week']],
         chart: ['Quotes this week', 'target 4 / day', [75, 100, 50, 100, 60]],
         feed: [
-          ['9:02', '<b>Quote sent</b> — two-floor office, nightly service, $18.4K/yr'],
+          ['9:02', '<b>Quote sent</b> · two-floor office, nightly service, $18.4K/yr'],
           ['8:40', 'Site visit logged · GC in Newark · walkthrough Thu'],
           ['8:15', 'Coaching from Icebreaker: “Ask for the walkthrough date on the first visit.”']]
       },
@@ -416,7 +441,7 @@
           ['Pipeline', '$22K', 'up', '▲ $6K this week']],
         chart: ['Outreach this week', 'target 40 / day', [90, 100, 85, 95, 70]],
         feed: [
-          ['9:02', '<b>Demo held</b> — HR lead, 60-person firm, proposal Fri'],
+          ['9:02', '<b>Demo held</b> · HR lead, 60-person firm, proposal Fri'],
           ['8:52', 'Reply · “send me pricing” · follow-up set for tomorrow'],
           ['8:20', 'Coaching from Icebreaker: “Shorter first message. Lead with their number.”']]
       }
