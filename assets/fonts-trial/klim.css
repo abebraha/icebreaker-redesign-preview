@@ -1,6 +1,0 @@
-/* Type test: Klim. Test fonts, limited character set, for evaluation on the preview only. */
-@font-face { font-family: "TrialDisplay"; src: url("klim/display-500.woff2") format("woff2"); font-weight: 500; font-display: swap; }
-@font-face { font-family: "TrialDisplay"; src: url("klim/display-600.woff2") format("woff2"); font-weight: 600; font-display: swap; }
-@font-face { font-family: "TrialDisplay"; src: url("klim/display-700.woff2") format("woff2"); font-weight: 700; font-display: swap; }
-@font-face { font-family: "TrialSerif"; src: url("klim/serif-italic.woff2") format("woff2"); font-style: italic; font-weight: 400; font-display: swap; }
-:root { --display: "TrialDisplay", "Inter Tight", "Inter", system-ui, sans-serif; --serif: "TrialSerif", "Instrument Serif", Georgia, serif; }
