@@ -804,3 +804,9 @@ table.cmp tr.me td { background: rgba(31,79,224,.07); color: var(--fg); }
 .verdict .restart:hover { color: var(--ink); }
 .fitnote { margin-top: 18px; text-align: center; font-family: var(--mono); font-size: .66rem; letter-spacing: .12em; text-transform: uppercase; color: var(--ink3); }
 @media (max-width: 640px) { .fit { padding-top: 120px; } .quiz { padding: 22px 20px 26px; border-radius: 18px; } .opt { font-size: .98rem; padding: 15px 16px; } }
+
+/* Mobile call bar: only after the visitor has scrolled past the first screen */
+@media (max-width: 900px) {
+  .mobile-cta { transform: translateY(140%); opacity: 0; pointer-events: none; transition: transform .45s var(--ease), opacity .3s ease; }
+  .mobile-cta.show { transform: none; opacity: 1; pointer-events: auto; }
+}

@@ -169,6 +169,13 @@
     });
   }
 
+  /* ---------- Mobile call bar: appears once the first screen is scrolled past ---------- */
+  const mcta = document.querySelector('.mobile-cta');
+  if (mcta) {
+    const showBar = () => mcta.classList.toggle('show', window.scrollY > window.innerHeight * 0.7);
+    showBar(); window.addEventListener('scroll', showBar, { passive: true });
+  }
+
   /* ---------- Year ---------- */
   document.querySelectorAll('[data-year]').forEach((el) => { el.textContent = new Date().getFullYear(); });
 
