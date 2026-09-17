@@ -400,6 +400,8 @@ a:focus-visible, button:focus-visible, input:focus-visible, summary:focus-visibl
 .phero .wrap { position: relative; }
 .phero h1 { font-size: clamp(2.6rem, 6vw, 5.2rem); margin-bottom: 22px; }
 .phero .lead { margin-bottom: 0; }
+.phero .cta-row { margin-top: 34px; }
+@media (max-width: 640px) { .phero .cta-row { margin-top: 28px; } .phero .cta-row .btn { flex: 1 1 auto; } }
 @media (max-width: 640px) { .phero { padding: 130px 0 40px; } }
 
 .tiles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
