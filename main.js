@@ -126,7 +126,9 @@
     const range = calc.querySelector('input[type="range"]'), out = calc.querySelector('output');
     const monthly = calc.querySelector('[data-monthly]'), onetime = calc.querySelector('[data-onetime]'), first = calc.querySelector('[data-first]'), capnote = calc.querySelector('[data-capnote]');
     const segs = calc.querySelectorAll('.seg button');
-    const FIRST = 3500, ADD = 1500, CAP = 7000, FEE = 3500;
+    // $7,000 per hire: $3,500 search fee + $3,500 on the start date, which covers that rep's
+    // first 30 days of management. So year one bills the hire plus 11 months of management.
+    const FIRST = 3500, ADD = 1500, CAP = 7000, FEE = 7000, COVERED_MONTHS = 1;
     const money = (n) => '$' + n.toLocaleString('en-US');
     const baseIn = calc.querySelector('[data-base]');
     const $ = (sel) => calc.querySelector(sel);
@@ -144,7 +146,9 @@
         $('[data-base-note]').textContent = money(base) + ' a year' + (n > 1 ? ' each, ' + n + ' reps' : '') + ', paid by you';
         $('[data-allin]').textContent = money(total) + '/mo';
       }
-      first.textContent = money(total * 12 + FEE * n);
+      // rep salary runs all 12 months; our management runs 12 minus the month the start-date fee covers
+      const repYear = (total - m) * 12, mgmtYear = m * (12 - COVERED_MONTHS);
+      first.textContent = money(repYear + mgmtYear + FEE * n);
       if (rawv > CAP) capnote.innerHTML = '<span class="ok">Cap reached.</span> ' + n + ' reps would be ' + money(rawv) + '/mo without it. You pay ' + money(CAP) + '.';
       else if (rawv === CAP) capnote.innerHTML = '<span class="ok">At the cap.</span> Every rep after this one is free to manage.';
       else capnote.textContent = money(CAP - rawv) + ' of headroom before the ' + money(CAP) + ' cap.';
