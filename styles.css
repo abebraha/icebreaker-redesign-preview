@@ -820,3 +820,14 @@ table.cmp tr.me td { background: rgba(31,79,224,.07); color: var(--fg); }
   .mobile-cta.show { transform: none; opacity: 1; pointer-events: auto; }
 }
 
+
+/* ---- other ways to work together (pricing page); .way/.ways is a different component ---- */
+.svcs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 44px; }
+.svc { background: var(--surface); border: 1px solid var(--glass-line); border-radius: 18px; padding: 30px; display: grid; gap: 12px; align-content: start; }
+.svc .lbl { font-family: var(--mono); font-size: .66rem; letter-spacing: .14em; text-transform: uppercase; color: var(--ink3); }
+.svc .p { font-family: var(--display); font-size: clamp(1.9rem, 2.6vw, 2.4rem); font-weight: 600; letter-spacing: -.045em; line-height: 1; color: var(--ink); font-variant-numeric: tabular-nums; }
+.svc .p small { font-family: var(--body); font-size: .95rem; font-weight: 500; color: var(--ink3); letter-spacing: 0; margin-left: 5px; }
+.svc .ssub { color: var(--ice); font-size: .9rem; font-weight: 500; margin: -4px 0 4px; }
+.svc p { color: var(--ink2); font-size: .95rem; }
+.svc .sfor { margin-top: 4px; padding-top: 14px; border-top: 1px solid var(--glass-line); color: var(--ink3); font-size: .86rem; }
+@media (max-width: 900px) { .svcs { grid-template-columns: 1fr; } }
